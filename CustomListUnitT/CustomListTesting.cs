@@ -117,16 +117,32 @@ namespace CustomListUnitT
             Assert.AreEqual(actualCount, expectedCount);
         }
 
-        [TestMethod]
-        public void Remove_EmptyCustomList_IndexOutOfBounds()
-        {
-            //arrange
-            CustomList<Person> personList = new CustomList<Person> { };
-            //act
+        //[TestMethod]
+        //public void Remove_EmptyCustomList_IndexOutOfBounds()
+        //{
+        //    //arrange
+        //    CustomList<Person> personList = new CustomList<Person> { };
+        //    //act
 
-            //assert
-            Assert.ThrowsException<ArgumentOutOfRangeException>(personList.Remove());
-        }
+        //    //assert
+        //    Assert.ThrowsException<ArgumentOutOfRangeException>(personList.Remove());
+        //}
+
+        //public void Remove_GetRemovedObjectField_IndexOutOfRange()
+        //{
+        //    //arrange
+        //    CustomList<Person> personList = new CustomList<Person> { };
+        //    Person john = new Person("John", 41);
+        //    Person julie = new Person("Julie", 40);
+        //    personList.Add(john);
+        //    personList.Add(julie);
+        //    int expectedAge = 40;
+        //    //act
+        //    personList.Remove();
+        //    int actualAge = personList[1].age;
+        //    //assert
+        //    Assert.ThrowsException<ArgumentOutOfRangeException>(Action );
+        //}
 
 
         [TestMethod]

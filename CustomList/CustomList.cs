@@ -33,15 +33,23 @@ namespace CustomList
         {
             CheckCapacity("Add");
             T[] oldArray = _array;
-            CreateNewArray(oldArray);
+            CreateNewArray(oldArray, Count);
             _array[Count] = item;
             count++;
         }
 
-        private void CreateNewArray(T[] oldArray)
+        public void Remove()
+        {
+            CheckCapacity("Remove");
+            T[] oldArray = _array;
+            CreateNewArray(oldArray, (Count - 1));
+            count--;
+        }
+
+        private void CreateNewArray(T[] oldArray, int limit)
         {
             _array = new T[Capacity];
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < limit; i++)
             {
                 _array[i] = oldArray[i];
             }
@@ -52,6 +60,10 @@ namespace CustomList
             if (Count == Capacity && action == "Add")
             {
                 capacity = count * 2;
+            }
+            if(Capacity > 4 && (Count - 1) * 2 == Capacity && action == "Remove")
+            {
+                capacity = Count - 1;
             }
         }
     }
