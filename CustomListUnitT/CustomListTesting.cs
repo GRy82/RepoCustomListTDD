@@ -2,10 +2,10 @@
 using System;
 using CustomList;
 
-namespace UnitTestCustomList
+namespace CustomListUnitT
 {
     [TestClass]
-    public class UnitTest1
+    public class CustomListTesting
     {
         [TestMethod]
         public void Add_IncrementCount_CountOfFour()
@@ -32,7 +32,7 @@ namespace UnitTestCustomList
             int expected = 8;
             int actual;
             //act
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 customIntList.Add(1);
             }
@@ -75,7 +75,7 @@ namespace UnitTestCustomList
             //arrange
             Person william = new Person("William", 66);
             var expected = william.GetType();
-            CustomList <Person> personList = new CustomList<Person> {  };
+            CustomList<Person> personList = new CustomList<Person> { };
             //act
             personList.Add(william);
             var actual = personList[0].GetType();
@@ -100,7 +100,5 @@ namespace UnitTestCustomList
             Assert.AreEqual(actualName, expectedName);
             Assert.AreEqual(actualAge, expectedAge);
         }
-
-      
     }
 }

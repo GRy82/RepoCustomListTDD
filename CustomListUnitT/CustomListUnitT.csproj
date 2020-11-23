@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E888EAE5-3C20-447E-882E-D5AA0AEEEB42}</ProjectGuid>
+    <ProjectGuid>{348A7CF1-510C-4A00-B02D-C594126ACA26}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTestCustomList</RootNamespace>
-    <AssemblyName>UnitTestCustomList</AssemblyName>
+    <RootNamespace>CustomListUnitT</RootNamespace>
+    <AssemblyName>CustomListUnitT</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,14 +49,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="CustomListTesting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CustomList\CustomList\CustomList.csproj">
+    <ProjectReference Include="..\CustomList\CustomList.csproj">
       <Project>{cc771ff5-8790-4503-ade4-979d7046e6d9}</Project>
       <Name>CustomList</Name>
     </ProjectReference>
