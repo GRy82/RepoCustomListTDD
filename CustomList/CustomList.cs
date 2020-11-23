@@ -10,17 +10,24 @@ namespace CustomList
     {
         private T[] _array = new T[4];
 
-        public T this[int i]
-        {
-            get {  return _array[i];}
-            set { _array[i] = value; }
-        }
-
         private int count;
+
         public int Count { get { return count;  }  }
 
         private int capacity;
         public int Capacity { get { return capacity; } }
+
+        public CustomList()
+        {
+            this.count = 0;
+            this.capacity = 4;
+        }
+        public T this[int i]
+        {
+            get { return _array[i]; }
+            set { _array[i] = value; }
+        }
+
 
         public void Add(T item)
         {
@@ -33,10 +40,10 @@ namespace CustomList
 
         private void CreateNewArray(T[] oldArray)
         {
-            this._array = new T[this.Capacity];
-            for (int i = 0; i < this.Count; i++)
+            _array = new T[Capacity];
+            for (int i = 0; i < Count; i++)
             {
-                this._array[i] = oldArray[i];
+                _array[i] = oldArray[i];
             }
         }
 
