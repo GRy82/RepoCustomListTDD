@@ -100,5 +100,111 @@ namespace CustomListUnitT
             Assert.AreEqual(actualName, expectedName);
             Assert.AreEqual(actualAge, expectedAge);
         }
+
+        //At this point, all Add methods have passed UnitTesting.
+        [TestMethod]
+        public void Remove_CustomListCount_DecreaseByOne()
+        {
+            //arrange
+            CustomList<Person> personList = new CustomList<Person> {  };
+            personList.Add(new Person("Tim", 44));
+            personList.Add(new Person("Kim", 38));
+            int expectedCount = 1;
+            //act
+            personList.Remove();
+            int actualCount = personList.Count;
+            //assert
+            Assert.AreEqual(actualCount, expectedCount);
+        }
+
+        [TestMethod]
+        public void Remove_EmptyCustomList_IndexOutOfBounds()
+        {
+            //arrange
+            CustomList<Person> personList = new CustomList<Person> { };
+            //act
+
+            //assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(personList.Remove());
+        }
+
+
+        [TestMethod]
+        public void Remove_CustomListCapacity_TrimInHalf()
+        {
+            //arrange
+            CustomList<int> integerList = new CustomList<int> { };
+            integerList.Add(1);
+            integerList.Add(1);
+            integerList.Add(1);
+            integerList.Add(1);
+            integerList.Add(1);
+            int expectedCap = 4;
+            //act
+            integerList.Remove();
+            int actualCap = integerList.Capacity;
+            //assert
+            Assert.AreEqual(expectedCap, actualCap);
+        }
+
+        [TestMethod]
+        public void Remove_OrderOfCollection_RemainsSame()
+        {
+            //arrange
+            CustomList<string> snapCadence = new CustomList<string> { };
+            snapCadence.Add("ready");
+            snapCadence.Add("set");
+            snapCadence.Add("hike");
+            string expectedConcat = "readyset";
+            //act
+            snapCadence.Remove();
+            string actualConcat = "";
+            for(int i = 0; i < snapCadence.Count; i++)
+            {
+                actualConcat += snapCadence[i];
+            }
+            //assert
+            Assert.AreEqual(actualConcat, expectedConcat);
+        }
+
+        [TestMethod]
+        public void Remove_CountAndCapacity_ReturnToInitialIfEmpty()
+        {
+            //arrange
+            CustomList<string> arbitraryWords = new CustomList<string> { };
+            for(int i = 0; i < 6; i++)
+            {
+                arbitraryWords.Add("Shnarff shnarff");
+            }
+            //act
+            for (int i = 5; i >= 0; i--)
+            {
+                arbitraryWords.Remove();
+            }
+            bool actualCountZero = arbitraryWords.Count == 0;
+            bool actualCapFour = arbitraryWords.Capacity == 4;
+            //assert
+            Assert.IsTrue(actualCapFour && actualCountZero);
+        }
+
+        [TestMethod]
+        public void Remove_SumOfIntegerContents_DecreasedByLastValue()
+        {
+            //arrange
+            CustomList<int> addedNums = new CustomList<int> { };
+            addedNums.Add(4);
+            addedNums.Add(5);
+            addedNums.Add(7);
+            int actualSum = 0;
+            int expectedSum = 9;
+            //act
+            addedNums.Remove();
+            for (int i = 0; i < addedNums.Count; i++)
+            {
+                actualSum += addedNums[i];
+            }
+            //assert
+            Assert.AreEqual(actualSum, expectedSum);
+        }
     }
 }
