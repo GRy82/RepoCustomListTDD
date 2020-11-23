@@ -77,6 +77,21 @@ namespace UnitTestCustomList
         }
 
         [TestMethod]
+        public void Add_AppendsCorrectType_TypeIsPerson()
+        {
+
+            //arrange
+            Person william = new Person("William", 66);
+            var expected = william.GetType();
+            CustomList <Person> personList = new CustomList<Person> {  };
+            //act
+            personList.Add(william);
+            var actual = personList[0].GetType();
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
         public void Add_AccessObjectPropertyOfIndex_GetNameOfObject()
         {
 
@@ -86,5 +101,7 @@ namespace UnitTestCustomList
 
             //assert
         }
+
+        
     }
 }

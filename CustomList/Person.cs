@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    class Person
+    public class Person
     {
+        public int age;
+        public string name;
+
+        public Person(string name, int age)
+        {
+            this.age = age;
+            this.name = name;
+        }
     }
 }
