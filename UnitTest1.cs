@@ -46,15 +46,11 @@ namespace UnitTestCustomList
         {
 
             //arrange
-            bool expectedEqual = false;
             CustomList<int> customIntList = new CustomList<int> { };
             //act
             customIntList.Add(1);
             customIntList.Add(1);
-
-            if (customIntList[0] == customIntList[1]) {
-                expectedEqual = true;
-            }
+            bool expectedEqual = customIntList[0] == customIntList[1];
             //assert
             Assert.IsTrue(expectedEqual);
         }
@@ -63,15 +59,11 @@ namespace UnitTestCustomList
         {
 
             //arrange
-            bool expectedUnequal = false;
             CustomList<int> customIntList = new CustomList<int> { };
             //act
             customIntList.Add(1);
             customIntList.Add(2);
-            if (customIntList[0] != customIntList[1])
-            {
-                expectedUnequal = true;
-            }
+            bool expectedUnequal = customIntList[0] != customIntList[1];
             //assert
             Assert.IsTrue(expectedUnequal);
         }
@@ -92,7 +84,7 @@ namespace UnitTestCustomList
         }
 
         [TestMethod]
-        public void Add_AccessObjectPropertyOfIndex_GetNameOfObject()
+        public void Add_AccessObjectFieldOfIndex_NamesAgesEqual()
         {
 
             //arrange
@@ -103,10 +95,12 @@ namespace UnitTestCustomList
             //act
             personList.Add(william);
             string actualName = personList[0].name;
-            string actualAge = personList[0].age;
+            int actualAge = personList[0].age;
             //assert
             Assert.AreEqual(actualName, expectedName);
             Assert.AreEqual(actualAge, expectedAge);
         }
+
+      
     }
 }
