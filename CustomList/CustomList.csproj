@@ -51,11 +51,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\UnitTestCustomList\UnitTestCustomList\UnitTestCustomList.csproj">
-      <Project>{e888eae5-3c20-447e-882e-d5aa0aeeeb42}</Project>
-      <Name>UnitTestCustomList</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
