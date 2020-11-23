@@ -96,12 +96,17 @@ namespace UnitTestCustomList
         {
 
             //arrange
-
+            int expectedAge = 66;
+            string expectedName = "William";
+            Person william = new Person("William", 66);
+            CustomList<Person> personList = new CustomList<Person> { };
             //act
-
+            personList.Add(william);
+            string actualName = personList[0].name;
+            string actualAge = personList[0].age;
             //assert
+            Assert.AreEqual(actualName, expectedName);
+            Assert.AreEqual(actualAge, expectedAge);
         }
-
-        
     }
 }
