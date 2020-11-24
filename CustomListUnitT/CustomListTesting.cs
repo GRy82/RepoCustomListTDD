@@ -279,5 +279,8 @@ namespace CustomListUnitT
             //assert
             Assert.AreEqual(customList.Count, alphabetString.Length);
         }
+
+        //------------------------------------------------------------------------------------
+        //------------------------- (+) Operator TESTS----------------------------------------
     }
 }

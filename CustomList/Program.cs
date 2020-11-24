@@ -12,14 +12,7 @@ namespace CustomList
     {
         static void Main(string[] args)
         {
-            int i = 4;
-            i.ToString();
-            char e = 'e';
-            e.ToString();
-            Person person = new Person("Trey", 43);
-            string personString = person.ToString();
-            Console.WriteLine(person);
-            Console.ReadLine();
+            
 
         }
     }

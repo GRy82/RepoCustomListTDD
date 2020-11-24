@@ -78,6 +78,18 @@ namespace CustomList
             }
             return segmentalString;
         }
+
+
+        public static CustomList<T> operator +(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+            CustomList<T> summedList = new CustomList<T> { };
+            summedList = listOne;
+            for (int i = 0; i < listTwo.Count; i++)
+            {
+                summedList.Add(listTwo[i]);
+            }
+            return summedList;
+        }
     }
 
     
