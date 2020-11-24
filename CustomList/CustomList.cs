@@ -157,6 +157,36 @@ namespace CustomList
             }
             return listOne;
         }
+
+        public CustomList<T> Zipper(CustomList<T> otherList)
+        {
+            if (otherList.Count == 0 && this.Count != 0){
+                return this;
+            }
+            else if (otherList.Count != 0 && this.Count == 0) {
+                return otherList;
+            }
+            else {
+                CustomList<T> zippedList = new CustomList<T>();
+                int smallerCount = this.Count;   //Default assignments.
+                int largerCount = otherList.Count;
+                CustomList<T> largerList = otherList;
+                if (this.Count > otherList.Count) { //Flip the assignments, if statement is true.
+                    smallerCount = otherList.Count;
+                    largerCount = this.Count;
+                    largerList = this;
+                }
+                for (int i = 0; i < smallerCount; i++) { //Zip together matching indeces.
+                    zippedList.Add(this[i]);
+                    zippedList.Add(otherList[i]);
+                }
+                for (int i = smallerCount; i < largerCount; i++) { //Zip together matching indeces.
+                    zippedList.Add(largerList[i]);
+                }
+                return zippedList;
+            }
+        }
+        
     }
 
     

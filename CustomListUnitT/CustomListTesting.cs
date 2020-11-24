@@ -550,7 +550,7 @@ namespace CustomListUnitT
             int expectedLastNumber = 10;
             //act
             zippedList = evenNums.Zipper(oddNums);
-            int actualLastNumber = zippedList[Count - 1];
+            int actualLastNumber = zippedList[zippedList.Count - 1];
             //assert
             Assert.AreEqual(actualLastNumber, expectedLastNumber);
 
