@@ -469,8 +469,7 @@ namespace CustomListUnitT
             { 
                 numsList1.Add(i);
             }
-            int expectedCount = 0;
-            int expectedCap = 4;
+            CustomList<int> emptyList = new CustomList<int>();
             //act
             finalList = numsList1 - numsList1;
             int actualCount = finalList.Count;
@@ -478,9 +477,140 @@ namespace CustomListUnitT
             string actualContents = finalList.ToString();
             bool isEmpty = (actualContents == null || actualContents == "");
             //assert
-            Assert.AreEqual(actualCap, expectedCap);
-            Assert.AreEqual(actualCount, expectedCount);
+            Assert.AreEqual(actualCap, emptyList.Capacity);
+            Assert.AreEqual(actualCount, emptyList.Count);
             Assert.IsTrue(isEmpty);
         }
+
+        //------------------------------------------------------------------------------------
+        //------------------------------- Zipper TESTS----------------------------------------
+        [TestMethod]
+        public void Zipper_ReturnedList_HasCorrectCapacity()
+        {
+            //arrange
+            CustomList<int> evenNums = new CustomList<int> { };
+            CustomList<int> oddNums = new CustomList<int> { };
+            for(int i = 0; i < 12; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    evenNums.Add(i);
+                }
+                else
+                {
+                    oddNums.Add(i);
+                }
+            }
+            CustomList<int> zippedList;
+            int expectedCapacity = 16;
+            //act
+            zippedList = oddNums.Zipper(evenNums);
+            int actualCapacity = zippedList.Capacity;
+            //assert
+            Assert.AreEqual(actualCapacity, expectedCapacity);
+            
+        }
+
+        [TestMethod]
+        public void Zipper_PassedEmptyList_ReturnPopulatedList()
+        {
+            //arrange
+            CustomList<char> listOne = new CustomList<char> { };
+            CustomList<char> listTwo = new CustomList<char> { };
+            listOne.Add('A');
+            listOne.Add('B');
+            //act
+            CustomList<char> zipped;
+            zipped = listOne.Zipper(listTwo);
+            
+            //assert
+            Assert.AreEqual(listOne, zipped);
+
+        }
+
+        [TestMethod]
+        public void Zipper_UnequalOriginalCounts_ReturnWithExcessAtEnd()
+        {
+            //arrange
+            CustomList<int> evenNums = new CustomList<int> { };
+            CustomList<int> oddNums = new CustomList<int> { };
+            for (int i = 0; i < 9; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    evenNums.Add(i);
+                }
+                else
+                {
+                    oddNums.Add(i);
+                }
+            }
+            evenNums.Add(10);
+            CustomList<int> zippedList;
+            int expectedLastNumber = 10;
+            //act
+            zippedList = evenNums.Zipper(oddNums);
+            int actualLastNumber = zippedList[Count - 1];
+            //assert
+            Assert.AreEqual(actualLastNumber, expectedLastNumber);
+
+        }
+
+        [TestMethod]
+        public void Zipper_OriginalList_RemainUnchanged()
+        {
+            //arrange
+            CustomList<int> evenNums = new CustomList<int> { };
+            CustomList<int> oddNums = new CustomList<int> { };
+            for (int i = 0; i < 10; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    evenNums.Add(i);
+                }
+                else
+                {
+                    oddNums.Add(i);
+                }
+            }
+            CustomList<int> zippedList;
+            string expectedOddString = "13579";
+            string expectedEvenString = "02468";
+            //act
+            zippedList = evenNums.Zipper(oddNums);
+            string actualOddString = oddNums.ToString();
+            string actualEvenString = evenNums.ToString();
+            //assert
+            Assert.AreEqual(actualOddString, expectedOddString);
+            Assert.AreEqual(actualEvenString, expectedEvenString);
+
+        }
+        [TestMethod]
+        public void Zipper_ReturnedList_HasOrderedNumbers()
+        {
+            //arrange
+            CustomList<int> evenNums = new CustomList<int> { };
+            CustomList<int> oddNums = new CustomList<int> { };
+            for (int i = 0; i < 10; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    evenNums.Add(i);
+                }
+                else
+                {
+                    oddNums.Add(i);
+                }
+            }
+            CustomList<int> zippedList;
+            string expectedString = "0123456789";
+            //act
+            zippedList = evenNums.Zipper(oddNums);
+            string actualString = zippedList.ToString();
+            //assert
+            Assert.AreEqual(actualString, expectedString);
+
+        }
+
     }
 }
