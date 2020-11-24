@@ -611,6 +611,58 @@ namespace CustomListUnitT
             Assert.AreEqual(actualString, expectedString);
 
         }
+        //------------------------------------------------------------------------------------
+        //------------------------------- QuickSort TESTS----------------------------------------
+        [TestMethod]
+        public void Sort_CustomListSequence_AscendingOrderInts()
+        {
+            //arrange
+            CustomList<int> unorderedList = new CustomList<int>();
+            unorderedList.Add(4);
+            unorderedList.Add(3);
+            unorderedList.Add(1);
+            unorderedList.Add(5);
+            string expectedOrder = "1345";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
+
+        [TestMethod]
+        public void Sort_CustomListSequence_AlphabetizedChars()
+        {
+            //arrange
+            CustomList<char> unorderedList = new CustomList<char>();
+            unorderedList.Add('B');
+            unorderedList.Add('F');
+            unorderedList.Add('G');
+            unorderedList.Add('A');
+            string expectedOrder = "ABFG";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
+
+        [TestMethod]
+        public void Sort_CustomListSequence_AlphabetizedStrings()
+        {
+            //arrange
+            CustomList<string> unorderedList = new CustomList<string>();
+            unorderedList.Add("Puppy");
+            unorderedList.Add("Dog");
+            unorderedList.Add("Dorm");
+            unorderedList.Add("Poopy");
+            string expectedOrder = "DogDormPoopyPuppy";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
 
     }
 }
