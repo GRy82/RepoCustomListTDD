@@ -109,7 +109,7 @@ namespace CustomList
             }
             if (Capacity > 4 && (Count - prospectiveRemoval) * 2 <= Capacity && action == "Remove")
             {
-                capacity = Math.Max((int)((Count - prospectiveRemoval) / 4), 4);
+                capacity = Math.Max((int)(Count - prospectiveRemoval), 4);
             }
         }
 
@@ -144,7 +144,7 @@ namespace CustomList
             { 
                 for (int j = 0; j < listTwo.Count; j++)
                 {
-                    if (listOne[i].ToString() == listTwo[j].ToString())
+                    if (listOne[i].ToString() == listTwo[j].ToString() && itemsToRemove.CheckItemPresence(listTwo[j]) < 1 )
                     {
                         itemsToRemove.Add(listTwo[j]);
                     }
