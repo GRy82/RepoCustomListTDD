@@ -120,6 +120,25 @@ namespace CustomListUnitT
             Assert.AreEqual(actualCount, expectedCount);
         }
 
+        [TestMethod] 
+        public void Remove_SpecificItem_RemoveAllOccurrences()
+        {
+            //arrange
+            CustomList<int> numsList = new CustomList<int> { };
+            for (int i = 0; i < 5; i++)
+            {
+                numsList.Add(i);
+                numsList.Add(3);
+            }
+            int expectedCount = 4;
+            //act
+            numsList.Remove(3);
+            int actualCount = numsList.Count;
+            //assert
+            Assert.AreEqual(actualCount, expectedCount);
+
+        }
+
         //[TestMethod]
         //public void Remove_EmptyCustomList_IndexOutOfBounds()
         //{
@@ -345,6 +364,100 @@ namespace CustomListUnitT
             }
             //assert
             Assert.AreEqual(actual, expected);
+        }
+
+        //------------------------------------------------------------------------------------
+        //------------------------- (-) Operator TESTS----------------------------------------
+
+        [TestMethod]
+        public void SubtractionOperatorOverload_ListCount_ReflectsFinalList()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            CustomList<int> finalList;
+            for (int i = 0; i < 7; i++)
+            {
+                if (i < 3) {
+                    numsList2.Add(i);
+                }
+                numsList1.Add(i);
+            }
+            int expectedCount = 4;
+            //act
+            finalList = numsList1 - numsList2;
+            int actualCount = finalList.Count;
+            //assert
+            Assert.AreEqual(actualCount, expectedCount);
+        }
+
+        [TestMethod]
+        public void SubtractionOperatorOverload_ListContent_OddsOnly()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            CustomList<int> finalList;
+            for (int i = 0; i < 11; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    numsList2.Add(i);
+                }
+                numsList1.Add(i);
+            }
+            int expectedOddCount = 5;
+            //act
+            finalList = numsList1 - numsList2;
+            int actualOddCount = 0;
+            for(int i = 0; i < finalList.Count; i++)
+            {
+                if(finalList[i] % 2 != 0){
+                    actualOddCount++;
+                }
+            }
+            //assert
+            Assert.AreEqual(actualOddCount, expectedOddCount);
+        }
+
+        [TestMethod]
+        public void SubtractionOperatorOverload_ListCapacity_IsCorrectSize()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            CustomList<int> finalList;
+            numsList2.Add(4);
+            for (int i = 0; i < 5; i++)
+            {
+                numsList1.Add(i);
+            }
+            int expectedCapacity = 4;
+            //act
+            finalList = numsList1 - numsList2;
+            int actualCapacity = finalList.Capacity;
+            //assert
+            Assert.AreEqual(actualCapacity, expectedCapacity);
+        }
+
+        [TestMethod]
+        public void SubtractionOperatorOverload_RepeatValuesInSubtractedList_AreHandled()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            CustomList<int> finalList;
+            for (int i = 0; i < 5; i++)
+            {
+                numsList2.Add(2);
+                numsList1.Add(i);
+            }
+            string expectedSequence = "0134";
+            //act
+            finalList = numsList1 - numsList2;
+            string actualSequence = finalList.ToString();
+            //assert
+            Assert.AreEqual(actualSequence, expectedSequence);
         }
     }
 }

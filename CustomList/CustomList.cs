@@ -31,19 +31,50 @@ namespace CustomList
 
         public void Add(T item)
         {
-            CheckCapacity("Add");
+            CheckCapacity("Add", 1);
             T[] oldArray = _array;
             CreateNewArray(oldArray, Count);
             _array[Count] = item;
             count++;
         }
 
-        public void Remove()
+        public bool Remove()
         {
-            CheckCapacity("Remove");
+            if (this.Count < 1) {
+                return false;
+            }
+            CheckCapacity("Remove", 1);
             T[] oldArray = _array;
             CreateNewArray(oldArray, (Count - 1));
             count--;
+            return true;
+        }
+
+        public bool Remove(T item)
+        {
+            int occurrences = CheckItemPresence(item);
+            if (occurrences > 0)
+            {
+                CheckCapacity("Remove", occurrences);
+                T[] oldArray = _array;
+                CreateNewArray(oldArray, (Count - occurrences), item);
+                count -= occurrences;
+                return true;
+            }
+            return false;
+        }
+
+        private int CheckItemPresence(T item)
+        {
+            int occurrences = 0;
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (item.ToString() == this[i].ToString())
+                {
+                    occurrences++;
+                }
+            }
+            return occurrences;
         }
 
         private void CreateNewArray(T[] oldArray, int limit)
@@ -55,15 +86,30 @@ namespace CustomList
             }
         }
 
-        private void CheckCapacity(string action)
+        private void CreateNewArray(T[] oldArray, int limit, T removal)
+        {
+            _array = new T[Capacity];
+            int counter = 0;
+            for (int i = 0; i < limit; i++)
+            {
+                while (oldArray[counter].ToString() == removal.ToString())
+                {
+                    counter++;
+                }
+                _array[i] = oldArray[counter];
+                counter++;
+            }
+        }
+
+        private void CheckCapacity(string action, int prospectiveRemoval)
         {
             if (Count == Capacity && action == "Add")
             {
                 capacity = count * 2;
             }
-            if (Capacity > 4 && (Count - 1) * 2 == Capacity && action == "Remove")
+            if (Capacity > 4 && (Count - prospectiveRemoval) * 2 <= Capacity && action == "Remove")
             {
-                capacity = Count - 1;
+                capacity = Math.Max((int)((Count - prospectiveRemoval) / 4), 4);
             }
         }
 
@@ -93,25 +139,24 @@ namespace CustomList
 
         public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
         {
-            CustomList<T> listSubtractedFrom = new CustomList<T> { };
-            bool isPresentInTwo;
+            CustomList<T> itemsToRemove = new CustomList<T> { };
             for(int i = 0; i < listOne.Count; i++)
-            {
-                isPresentInTwo = false;
+            { 
                 for (int j = 0; j < listTwo.Count; j++)
                 {
                     if (listOne[i].ToString() == listTwo[j].ToString())
                     {
-                        isPresentInTwo = true;
+                        itemsToRemove.Add(listTwo[j]);
                     }
-                }
-                if (!isPresentInTwo) {
-                    listSubtractedFrom.Add(listOne[i]);
                 }  
             }
-            return listSubtractedFrom;
-        }
 
+            for(int i = 0; i < itemsToRemove.Count; i++)
+            {
+                listOne.Remove(itemsToRemove[i]);
+            }
+            return listOne;
+        }
     }
 
     
