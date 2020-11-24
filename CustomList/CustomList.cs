@@ -28,12 +28,11 @@ namespace CustomList
             set { _array[i] = value; }
         }
 
-
+        //-----------PUBLIC METHODS-----------//
         public void Add(T item)
         {
-            CheckCapacity("Add", 1);
-            T[] oldArray = _array;
-            CreateNewArray(oldArray, Count);
+            UpdateCapacity("Add", 1);
+            CreateNewArray(Count);
             _array[Count] = item;
             count++;
         }
@@ -43,77 +42,23 @@ namespace CustomList
             if (this.Count < 1) {
                 return false;
             }
-            CheckCapacity("Remove", 1);
-            T[] oldArray = _array;
-            CreateNewArray(oldArray, (Count - 1));
+            UpdateCapacity("Remove", 1);
+            CreateNewArray(Count - 1);
             count--;
             return true;
         }
-
+     
         public bool Remove(T item)
         {
-            int occurrences = CheckItemPresence(item);
-            if (occurrences > 0)
-            {
-                CheckCapacity("Remove", occurrences);
-                T[] oldArray = _array;
-                CreateNewArray(oldArray, (Count - occurrences), item);
-                count -= occurrences;
-                return true;
+            int occurrences = GetItemFrequency(item);
+            if (occurrences == 0) {
+                return false;
             }
-            return false;
+            UpdateCapacity("Remove", occurrences);
+            CreateNewArray((Count - occurrences), item);
+            count -= occurrences;
+            return true;
         }
-
-        private int CheckItemPresence(T item)
-        {
-            int occurrences = 0;
-            for (int i = 0; i < this.Count; i++)
-            {
-                if (item.ToString() == this[i].ToString())
-                {
-                    occurrences++;
-                }
-            }
-            return occurrences;
-        }
-
-        private void CreateNewArray(T[] oldArray, int limit)
-        {
-            _array = new T[Capacity];
-            for (int i = 0; i < limit; i++)
-            {
-                _array[i] = oldArray[i];
-            }
-        }
-
-        private void CreateNewArray(T[] oldArray, int limit, T removal)
-        {
-            _array = new T[Capacity];
-            int counter = 0;
-            for (int i = 0; i < limit; i++)
-            {
-                while (oldArray[counter].ToString() == removal.ToString())
-                {
-                    counter++;
-                }
-                _array[i] = oldArray[counter];
-                counter++;
-            }
-        }
-
-        private void CheckCapacity(string action, int prospectiveRemoval)
-        {
-            if (Count == Capacity && action == "Add")
-            {
-                capacity = count * 2;
-            }
-            if (Capacity > 4 && (Count - prospectiveRemoval) * 2 <= Capacity && action == "Remove")
-            {
-                capacity = Math.Max((int)(Count - prospectiveRemoval), 4);
-            }
-        }
-
-
 
         public override string ToString()
         {
@@ -124,7 +69,6 @@ namespace CustomList
             }
             return segmentalString;
         }
-
 
         public static CustomList<T> operator +(CustomList<T> listOne, CustomList<T> listTwo)
         {
@@ -140,18 +84,17 @@ namespace CustomList
         public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
         {
             CustomList<T> itemsToRemove = new CustomList<T> { };
-            for(int i = 0; i < listOne.Count; i++)
-            { 
+            for (int i = 0; i < listOne.Count; i++)
+            {
                 for (int j = 0; j < listTwo.Count; j++)
                 {
-                    if (listOne[i].ToString() == listTwo[j].ToString() && itemsToRemove.CheckItemPresence(listTwo[j]) < 1 )
+                    if (listOne[i].ToString() == listTwo[j].ToString() && itemsToRemove.GetItemFrequency(listTwo[j]) < 1)
                     {
                         itemsToRemove.Add(listTwo[j]);
                     }
-                }  
+                }
             }
-
-            for(int i = 0; i < itemsToRemove.Count; i++)
+            for (int i = 0; i < itemsToRemove.Count; i++)
             {
                 listOne.Remove(itemsToRemove[i]);
             }
@@ -160,34 +103,82 @@ namespace CustomList
 
         public CustomList<T> Zipper(CustomList<T> otherList)
         {
-            if (otherList.Count == 0 && this.Count != 0){
+            if (otherList.Count == 0 && this.Count != 0)
+            {
                 return this;
             }
-            else if (otherList.Count != 0 && this.Count == 0) {
+            else if (otherList.Count != 0 && this.Count == 0)
+            {
                 return otherList;
             }
-            else {
+            else
+            {
                 CustomList<T> zippedList = new CustomList<T>();
                 int smallerCount = this.Count;   //Default assignments.
                 int largerCount = otherList.Count;
                 CustomList<T> largerList = otherList;
-                if (this.Count > otherList.Count) { //Flip the assignments, if statement is true.
+                if (this.Count > otherList.Count)
+                { //Flip the assignments, if statement is true.
                     smallerCount = otherList.Count;
                     largerCount = this.Count;
                     largerList = this;
                 }
-                for (int i = 0; i < smallerCount; i++) { //Zip together matching indeces.
+                for (int i = 0; i < smallerCount; i++)
+                { //Zip together matching indeces.
                     zippedList.Add(this[i]);
                     zippedList.Add(otherList[i]);
                 }
-                for (int i = smallerCount; i < largerCount; i++) { //Zip together matching indeces.
+                for (int i = smallerCount; i < largerCount; i++)
+                { //Zip together matching indeces.
                     zippedList.Add(largerList[i]);
                 }
                 return zippedList;
             }
         }
-        
-    }
 
-    
+        //------------Private (Supporting) Methods-----------//
+        private int GetItemFrequency(T item)
+        {
+            int occurrences = 0;
+            for (int i = 0; i < this.Count; i++) {
+                if (item.ToString() == this[i].ToString()) {
+                    occurrences++;
+                }
+            }
+            return occurrences;
+        }
+
+        private void CreateNewArray(int size)
+        {
+            T[] oldArray = _array;
+            _array = new T[Capacity];
+            for (int i = 0; i < size; i++) {
+                _array[i] = oldArray[i];
+            }
+        }
+
+        private void CreateNewArray(int size, T removal)
+        {
+            T[] oldArray = _array;
+            _array = new T[Capacity];
+            int counter = 0;
+            for (int i = 0; i < size; i++) {
+                while (oldArray[counter].ToString() == removal.ToString()) {
+                    counter++;
+                }
+                _array[i] = oldArray[counter];
+                counter++;
+            }
+        }
+
+        private void UpdateCapacity(string action, int prospectiveRemoval)
+        {
+            if (Count == Capacity && action == "Add"){//in this case, increase capactiy.
+                capacity = Count * 2;
+            }
+            if (Capacity > 4 && (Count - prospectiveRemoval) * 2 <= Capacity && action == "Remove") {//in this case, decrease capactiy.
+                capacity = Capacity / 2;
+            }
+        } 
+    }
 }
