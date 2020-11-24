@@ -441,7 +441,7 @@ namespace CustomListUnitT
         }
 
         [TestMethod]
-        public void SubtractionOperatorOverload_RepeatValuesInSubtractedList_AreHandled()
+        public void SubtractionOperatorOverload_RepeatValuesInSubtractedList_AreHandledOnce()
         {
             //arrange
             CustomList<int> numsList1 = new CustomList<int> { };
@@ -458,6 +458,29 @@ namespace CustomListUnitT
             string actualSequence = finalList.ToString();
             //assert
             Assert.AreEqual(actualSequence, expectedSequence);
+        }
+        [TestMethod]
+        public void SubtractionOperatorOverload_ListSubtractedBySelf_IsLikeEmptyList()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> finalList;
+            for (int i = 0; i < 5; i++)
+            { 
+                numsList1.Add(i);
+            }
+            int expectedCount = 0;
+            int expectedCap = 4;
+            //act
+            finalList = numsList1 - numsList1;
+            int actualCount = finalList.Count;
+            int actualCap = finalList.Capacity;
+            string actualContents = finalList.ToString();
+            bool isEmpty = (actualContents == null || actualContents == "");
+            //assert
+            Assert.AreEqual(actualCap, expectedCap);
+            Assert.AreEqual(actualCount, expectedCount);
+            Assert.IsTrue(isEmpty);
         }
     }
 }
