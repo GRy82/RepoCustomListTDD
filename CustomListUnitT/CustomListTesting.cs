@@ -101,6 +101,9 @@ namespace CustomListUnitT
             Assert.AreEqual(actualAge, expectedAge);
         }
 
+        //------------------------------------------------------------------------------------
+        //--------------------------REMOVE TESTS----------------------------------------------
+
         //At this point, all Add methods have passed UnitTesting.
         [TestMethod]
         public void Remove_CustomListCount_DecreaseByOne()
@@ -221,6 +224,60 @@ namespace CustomListUnitT
             }
             //assert
             Assert.AreEqual(actualSum, expectedSum);
+        }
+
+
+        //------------------------------------------------------------------------------------
+        //-------------------------ToString TESTS---------------------------------------------
+
+        [TestMethod]
+        public void ToString_ContentsOfList_PrintAsString()
+        {
+            //arrange
+            CustomList<int> numsList = new CustomList<int> { };
+            for (int i = 0; i < 6; i++)
+            {
+                numsList.Add(i);
+            }
+            string expected = "012345";
+            //act
+            string actual = numsList.ToString();
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void ToString_TwoEqualObjectLists_AreEqualAsStrings()
+        {
+            //arrange
+            CustomList<Person> youngVersions = new CustomList<Person> { };
+            CustomList<Person> oldVersions = new CustomList<Person> { };
+            for (int i = 0; i < 4; i++)
+            {
+                youngVersions.Add(new Person("John", i));
+                oldVersions.Add(new Person("John", i+60));
+            }
+            //act
+            string youngPeople = youngVersions.ToString();
+            string oldPeople = oldVersions.ToString();
+
+            //assert
+            Assert.AreEqual(youngPeople, oldPeople);
+        }
+
+        [TestMethod]
+        public void ToString_StringLengthOfChars_EqualToListCount()
+        {
+            //arrange
+            CustomList<char> customList = new CustomList<char> { };
+            for(int i = 65; i < 91; i++) //Capital A-Z.
+            {
+                customList.Add(Convert.ToChar(i));
+            }
+            //act
+            string alphabetString = customList.ToString();
+            //assert
+            Assert.AreEqual(customList.Count, alphabetString.Length);
         }
     }
 }

@@ -66,6 +66,18 @@ namespace CustomList
                 capacity = Count - 1;
             }
         }
+
+
+
+        public override string ToString()
+        {
+            string segmentalString = "";
+            for (int i = 0; i < this.Count; i++)
+            {
+                segmentalString += Convert.ToString(this[i]);
+            }
+            return segmentalString;
+        }
     }
 
     
