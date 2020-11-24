@@ -12,7 +12,7 @@ namespace CustomList
 
         private int count;
 
-        public int Count { get { return count;  }  }
+        public int Count { get { return count; } }
 
         private int capacity;
         public int Capacity { get { return capacity; } }
@@ -61,7 +61,7 @@ namespace CustomList
             {
                 capacity = count * 2;
             }
-            if(Capacity > 4 && (Count - 1) * 2 == Capacity && action == "Remove")
+            if (Capacity > 4 && (Count - 1) * 2 == Capacity && action == "Remove")
             {
                 capacity = Count - 1;
             }
@@ -90,6 +90,28 @@ namespace CustomList
             }
             return summedList;
         }
+
+        public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+            CustomList<T> listSubtractedFrom = new CustomList<T> { };
+            bool isPresentInTwo;
+            for(int i = 0; i < listOne.Count; i++)
+            {
+                isPresentInTwo = false;
+                for (int j = 0; j < listTwo.Count; j++)
+                {
+                    if (listOne[i].ToString() == listTwo[j].ToString())
+                    {
+                        isPresentInTwo = true;
+                    }
+                }
+                if (!isPresentInTwo) {
+                    listSubtractedFrom.Add(listOne[i]);
+                }  
+            }
+            return listSubtractedFrom;
+        }
+
     }
 
     
