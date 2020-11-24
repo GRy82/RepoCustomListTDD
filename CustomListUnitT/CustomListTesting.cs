@@ -282,5 +282,69 @@ namespace CustomListUnitT
 
         //------------------------------------------------------------------------------------
         //------------------------- (+) Operator TESTS----------------------------------------
+
+        [TestMethod]
+        public void PlusOperatorOverload_FinalListCount_EqualsSumOfOriginalCounts()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            for (int i = 0; i < 5; i++)
+            {
+                numsList1.Add(i);
+                numsList2.Add(i + 5);
+            }
+            CustomList<int> finalList;
+            int expectedCount = 10;
+            //act
+            finalList = numsList1 + numsList2;
+            int actualCount = finalList.Count;
+            //assert
+            Assert.AreEqual(actualCount, expectedCount);
+        }
+
+        [TestMethod]
+        public void PlusOperatorOverload_FinalListSequence_OrderedLeftToRight()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            for (int i = 0; i < 5; i++)
+            {
+                numsList1.Add(i);
+                numsList2.Add(i + 5);
+            }
+            CustomList<int> finalList;
+            string expected = numsList1.ToString() + numsList2.ToString();
+            //act
+            finalList = numsList1 + numsList2;
+            string actual = finalList.ToString();
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void PlusOperatorOverload_FinalListSummedValues_EqualSumOfOriginalListValues()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            for (int i = 0; i < 5; i++)
+            {
+                numsList1.Add(i);
+                numsList2.Add(i + 5);
+            }
+            CustomList<int> finalList;
+            int expected = 45;
+            //act
+            finalList = numsList1 + numsList2;
+            int actual = 0;
+            for (int i = 0; i < finalList.Count; i++)
+            {
+                actual += finalList[i];
+            }
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
     }
 }
