@@ -151,6 +151,22 @@ namespace CustomList
             }
         }
 
+        public void Sort()
+        {
+            int lastIndex = Count - 1;
+            int marker = 1;
+            while (marker <= lastIndex) {
+                //Element at index marker is out of order. Initiate shift.
+                if (Convert.ToInt32(_array[marker]) < Convert.ToInt32(_array[marker - 1])) {
+                    InsertAndShift(0, marker);
+                    marker++;
+                }
+                else{ //element at index marker is in order; move marker to right to check next index. 
+                    marker++;
+                }
+            }
+        }
+
         public void Sort(int startIndex, int Length)
         {
             int lastIndex = startIndex + Length - 1;
@@ -189,11 +205,6 @@ namespace CustomList
             {
                 _array[i] = tempArray[j];
             }
-        }
-
-        public void Sort()
-        {
-            
         }
 
 
