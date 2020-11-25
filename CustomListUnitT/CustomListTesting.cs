@@ -86,7 +86,6 @@ namespace CustomListUnitT
         [TestMethod]
         public void Add_AccessObjectFieldOfIndex_NamesAgesEqual()
         {
-
             //arrange
             int expectedAge = 66;
             string expectedName = "William";

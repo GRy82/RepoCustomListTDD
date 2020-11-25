@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T> where T : IComparable
+    public class CustomList<T>
     {
+
+        List<Person> person = new List<Person>();
         private T[] _array = new T[4];
 
         private int count;
@@ -28,7 +30,8 @@ namespace CustomList
             set { _array[i] = value; }
         }
 
-        //-----------PUBLIC METHODS-----------//
+         //-----------PUBLIC METHODS-----------//
+        //------------------------------------//
         public void Add(T item)
         {
             UpdateCapacity("Add", 1);
@@ -137,11 +140,27 @@ namespace CustomList
         }
 
        
+        public void Sort()
+        {
+            QuickSort(0, Count - 1);       
+        }
 
-        int Partition(T low, int subArraySize) 
+        void QuickSort(int lowIndex, int highIndex)
+        {
+            if (lowIndex < highIndex)
+            {
+                int partitionIndex = Partition(_array[lowIndex], highIndex);
+                QuickSort(lowIndex, partitionIndex);
+                QuickSort(partitionIndex + 1, highIndex);
+            }
+
+        }
+        
+
+        int Partition(T low, int highIndex) 
         {
             int forwardCounter = 0;
-            int backwardCounter = subArraySize - 1;
+            int backwardCounter = highIndex;
             T pivotPlace = low;
            while(_array[forwardCounter].CompareTo(_array[backwardCounter]) < 0)
             {
@@ -167,7 +186,8 @@ namespace CustomList
         }
 
         
-        //------------Private (Supporting) Methods-----------//
+         //------------Private (Supporting) Methods-----------//
+        //---------------------------------------------------//
         private int GetItemFrequency(T item)
         {
             int occurrences = 0;
