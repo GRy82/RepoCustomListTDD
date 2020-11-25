@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T>
+    public class CustomList<T> where T: IEnumerable<T>
     {
 
         List<Person> person = new List<Person>();
@@ -28,6 +28,14 @@ namespace CustomList
         {
             get { return _array[i]; }
             set { _array[i] = value; }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return _array[i];
+            }
         }
 
          //-----------PUBLIC METHODS-----------//
@@ -157,7 +165,7 @@ namespace CustomList
         }
         
 
-        int Partition(T low, int highIndex) 
+        public int Partition(T low, int highIndex)
         {
             int forwardCounter = 0;
             int backwardCounter = highIndex;
