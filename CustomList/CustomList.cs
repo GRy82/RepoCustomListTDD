@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T> where T: IEnumerable<T>
+    public class CustomList<T> : IEnumerable
     {
 
         List<Person> person = new List<Person>();
@@ -30,7 +31,7 @@ namespace CustomList
             set { _array[i] = value; }
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
             {
@@ -38,7 +39,9 @@ namespace CustomList
             }
         }
 
-         //-----------PUBLIC METHODS-----------//
+        
+
+        //-----------PUBLIC METHODS-----------//
         //------------------------------------//
         public void Add(T item)
         {
@@ -80,6 +83,7 @@ namespace CustomList
             }
             return segmentalString;
         }
+        
 
         public static CustomList<T> operator +(CustomList<T> listOne, CustomList<T> listTwo)
         {
@@ -147,54 +151,101 @@ namespace CustomList
             }
         }
 
-       
+        public void Sort(int startIndex, int Length)
+        {
+            int lastIndex = startIndex + Length - 1;
+            int marker = startIndex + 1;
+            //is value M at marker less than the value to left of it? If so, insert and shift, then increment. If not, only increment.
+            while (marker <= lastIndex)
+            {
+                //Element at index marker is out of order. Initiate shift.
+                if (Convert.ToInt32(_array[marker]) < Convert.ToInt32(_array[marker - 1]))
+                {
+                    InsertAndShift(startIndex, marker);
+                    marker++;
+                }
+                else //element at index marker is in order; move marker to right to check next index.
+                {
+                    marker++;
+                }
+            }
+        }
+
+        void InsertAndShift(int searchIndex, int marker)
+        {
+            while (Convert.ToInt32(_array[searchIndex]) < Convert.ToInt32(_array[marker]) && searchIndex < marker)
+            {
+                searchIndex++;
+            }
+            T insertHolder = _array[marker];//insertHolder will go into searchIndex
+            T[] tempArray = new T[marker - searchIndex];
+            //load a temp array.
+            for (int i = searchIndex, j = 0; i < marker; i++, j++)
+            {
+                tempArray[j] = _array[i];
+            }
+            _array[searchIndex] = insertHolder;
+            for (int i = searchIndex + 1, j = 0; i <= marker; i++, j++)
+            {
+                _array[i] = tempArray[j];
+            }
+        }
+
         public void Sort()
         {
-            QuickSort(0, Count - 1);       
+            
         }
 
-        void QuickSort(int lowIndex, int highIndex)
-        {
-            if (lowIndex < highIndex)
-            {
-                int partitionIndex = Partition(_array[lowIndex], highIndex);
-                QuickSort(lowIndex, partitionIndex);
-                QuickSort(partitionIndex + 1, highIndex);
-            }
 
-        }
-        
+        //A would-be Quick Sort Algorithm. Inheriting IComparable made CompareTo() method function, but it broke other parts of the code.  
 
-        public int Partition(T low, int highIndex)
-        {
-            int forwardCounter = 0;
-            int backwardCounter = highIndex;
-            T pivotPlace = low;
-           while(_array[forwardCounter].CompareTo(_array[backwardCounter]) < 0)
-            {
-                do
-                {
-                    forwardCounter++;
-                } while (_array[forwardCounter].CompareTo(pivotPlace) <= 0);
-                do
-                {
-                    backwardCounter--;
-                } while (_array[backwardCounter].CompareTo(pivotPlace) >= 0);
-                Swap(_array[forwardCounter], _array[backwardCounter], forwardCounter, backwardCounter);
-            }
+        //public void Sort()
+        //{
+        //    QuickSort(0, Count - 1);
+        //}
 
-            Swap(pivotPlace, _array[backwardCounter], 0, backwardCounter);
-            return backwardCounter;//This index becomes the place of the new partition for sub array to left and subarray to right.
-        }
+        //void QuickSort(int lowIndex, int highIndex)
+        //{
+        //    if (lowIndex < highIndex)
+        //    {
+        //        int partitionIndex = Partition(_array[lowIndex], highIndex);
+        //        QuickSort(lowIndex, partitionIndex);
+        //        QuickSort(partitionIndex + 1, highIndex);
+        //    }
 
-        void Swap(T higher, T lower, int forwardCounter, int backwardCounter)
-        {
-            _array[forwardCounter] = lower;
-            _array[backwardCounter] = higher;
-        }
+        //}
 
-        
-         //------------Private (Supporting) Methods-----------//
+
+        //public int Partition(T low, int highIndex)
+        //{
+        //    int forwardCounter = 0;
+        //    int backwardCounter = highIndex;
+        //    T pivotPlace = low;
+        //    while (_array[forwardCounter].CompareTo(_array[backwardCounter]) <= 0)
+        //    {
+        //        do
+        //        {
+        //            forwardCounter++;
+        //        } while (_array[forwardCounter].CompareTo(pivotPlace) <= 0);
+        //        do
+        //        {
+        //            backwardCounter--;
+        //        } while (_array[backwardCounter].CompareTo(pivotPlace) >= 0);
+        //        Swap(_array[forwardCounter], _array[backwardCounter], forwardCounter, backwardCounter);
+        //    }
+
+        //    Swap(pivotPlace, _array[backwardCounter], 0, backwardCounter);
+        //    return backwardCounter;//This index becomes the place of the new partition for sub array to left and subarray to right.
+        //}
+
+        //void Swap(T higher, T lower, int forwardCounter, int backwardCounter)
+        //{
+        //    _array[forwardCounter] = lower;
+        //    _array[backwardCounter] = higher;
+        //}
+
+
+        //------------Private (Supporting) Methods-----------//
         //---------------------------------------------------//
         private int GetItemFrequency(T item)
         {
