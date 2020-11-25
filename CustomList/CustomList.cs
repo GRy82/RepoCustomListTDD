@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T>
+    public class CustomList<T> where T : IComparable
     {
         private T[] _array = new T[4];
 
@@ -136,6 +136,37 @@ namespace CustomList
             }
         }
 
+       
+
+        int Partition(T low, int subArraySize) 
+        {
+            int forwardCounter = 0;
+            int backwardCounter = subArraySize - 1;
+            T pivotPlace = low;
+           while(_array[forwardCounter].CompareTo(_array[backwardCounter]) < 0)
+            {
+                do
+                {
+                    forwardCounter++;
+                } while (_array[forwardCounter].CompareTo(pivotPlace) <= 0);
+                do
+                {
+                    backwardCounter--;
+                } while (_array[backwardCounter].CompareTo(pivotPlace) >= 0);
+                Swap(_array[forwardCounter], _array[backwardCounter], forwardCounter, backwardCounter);
+            }
+
+            Swap(pivotPlace, _array[backwardCounter], 0, backwardCounter);
+            return backwardCounter;//This index becomes the place of the new partition for sub array to left and subarray to right.
+        }
+
+        void Swap(T higher, T lower, int forwardCounter, int backwardCounter)
+        {
+            _array[forwardCounter] = lower;
+            _array[backwardCounter] = higher;
+        }
+
+        
         //------------Private (Supporting) Methods-----------//
         private int GetItemFrequency(T item)
         {
