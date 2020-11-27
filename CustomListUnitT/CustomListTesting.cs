@@ -365,8 +365,33 @@ namespace CustomListUnitT
             Assert.AreEqual(actual, expected);
         }
 
-        //------------------------------------------------------------------------------------
-        //------------------------- (-) Operator TESTS----------------------------------------
+        [TestMethod]
+        public void PlusOperatorOverload_FinalListSummedValues_HandlesObjRefType()
+        {
+            //arrange
+            CustomList<Person> numsList1 = new CustomList<Person> { };
+            CustomList<Person> numsList2 = new CustomList<Person> { };
+            for (int i = 0; i < 5; i++)
+            {
+                personList1.Add(i);
+                personList2.Add(i + 5);
+            }
+            CustomList<int> finalList;
+            int expected = 45;
+            //act
+            finalList = numsList1 + numsList2;
+            int actual = 0;
+            for (int i = 0; i < finalList.Count; i++)
+            {
+                actual += finalList[i];
+            }
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
+
+
+        //------------------------------------------------------------------------------------//
+        //------------------------- (-) Operator TESTS----------------------------------------//
 
         [TestMethod]
         public void SubtractionOperatorOverload_ListCount_ReflectsFinalList()
@@ -611,7 +636,7 @@ namespace CustomListUnitT
 
         }
          //------------------------------------------------------------------------------------//
-        //------------------------------- Insertion Sort TESTS--------------------------------//
+        //-------------------------------Sort(Insertion) TESTS--------------------------------//
         [TestMethod]
         public void Sort_CustomListSequence_AscendingOrderInts()
         {
@@ -693,6 +718,7 @@ namespace CustomListUnitT
             //Also does not crash.
         }
 
+        [TestMethod]
         public void Sort_ListOfRefObjects_ListUnaltered()
         {
             //arrange
@@ -702,7 +728,7 @@ namespace CustomListUnitT
             unorderedList.Add(new Person("Jack", 47));
             unorderedList.Add(new Person("Kerouac", 47));
             CustomList<string> namesList = new CustomList<string> { };
-            string expected = "ToddRundrenJackKerouac";
+            string expected = "ToddRundgrenJackKerouac";
             //act
             unorderedList.Sort();
             foreach (Person person in unorderedList)
@@ -735,6 +761,5 @@ namespace CustomListUnitT
             //assert
             Assert.AreEqual(actual, expected);
         }
-
     }
 }

@@ -31,6 +31,9 @@ namespace CustomList
             set { _array[i] = value; }
         }
 
+         //-----------PUBLIC METHODS-----------//
+        //------------------------------------//
+
         public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
@@ -39,10 +42,6 @@ namespace CustomList
             }
         }
 
-        
-
-        //-----------PUBLIC METHODS-----------//
-        //------------------------------------//
         public void Add(T item)
         {
             UpdateCapacity("Add", 1);
@@ -77,7 +76,7 @@ namespace CustomList
         public override string ToString()
         {
             string segmentalString = "";
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 segmentalString += Convert.ToString(this[i]);
             }
@@ -172,6 +171,9 @@ namespace CustomList
             }
             return;
         }
+
+         //-------------------------------------------------------------------------//
+        //-----------------------Sort Support Methods------------------------------//
 
         void IterateMarker(int startIndex, int Length)
         {
@@ -297,7 +299,7 @@ namespace CustomList
         //}
 
 
-        //------------Private (Supporting) Methods-----------//
+         //------------Add/Remove Support Methods-------------//
         //---------------------------------------------------//
         private int GetItemFrequency(T item)
         {
