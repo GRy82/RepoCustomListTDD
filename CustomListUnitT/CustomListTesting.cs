@@ -369,24 +369,36 @@ namespace CustomListUnitT
         public void PlusOperatorOverload_FinalListSummedValues_HandlesObjRefType()
         {
             //arrange
-            CustomList<Person> numsList1 = new CustomList<Person> { };
-            CustomList<Person> numsList2 = new CustomList<Person> { };
-            for (int i = 0; i < 5; i++)
+            CustomList<Person> personList1 = new CustomList<Person> { };
+            CustomList<Person> personList2 = new CustomList<Person> { };
+            for (int i = 0; i < 3; i++)
             {
-                personList1.Add(i);
-                personList2.Add(i + 5);
+                personList1.Add(new Person("Bill", 44));
+                personList2.Add(new Person("SuperChad", 33));
             }
-            CustomList<int> finalList;
-            int expected = 45;
+            CustomList<Person> finalList;
+            string expected = "BillBillBillSuperChadSuperChadSuperChad";
             //act
-            finalList = numsList1 + numsList2;
-            int actual = 0;
+            finalList = personList1 + personList2;
+            string actual = null;
             for (int i = 0; i < finalList.Count; i++)
             {
-                actual += finalList[i];
+                actual += finalList[i].name;
             }
             //assert
             Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void PlusOperatorOverload_AddedEmptyLists_CreateEmptyList()
+        {
+            //arrange
+            CustomList<int> numsListOne = new CustomList<int> { };
+            CustomList<int> numsListTwo = new CustomList<int> { };
+            //act
+            CustomList<int> sumList = numsListOne + numsListTwo;
+            //assert
+            Assert.AreEqual(0, sumList.Count);
         }
 
 
