@@ -610,8 +610,8 @@ namespace CustomListUnitT
             Assert.AreEqual(actualString, expectedString);
 
         }
-        //------------------------------------------------------------------------------------
-        //------------------------------- QuickSort TESTS----------------------------------------
+         //------------------------------------------------------------------------------------//
+        //------------------------------- Insertion Sort TESTS--------------------------------//
         [TestMethod]
         public void Sort_CustomListSequence_AscendingOrderInts()
         {
@@ -680,6 +680,42 @@ namespace CustomListUnitT
             //assert
             Assert.AreEqual(actualOrder, expectedOrder);
         }
+
+        [TestMethod]
+        public void Sort_EmptyCustomList_ListUnaltered()
+        {
+            //arrange
+            CustomList<string> unorderedList = new CustomList<string>();
+            //act
+            unorderedList.Sort();
+            //assert
+            Assert.AreEqual(0, unorderedList.Count);
+            //Also does not crash.
+        }
+
+        public void Sort_ListOfRefObjects_ListUnaltered()
+        {
+            //arrange
+            CustomList<Person> unorderedList = new CustomList<Person>();
+            unorderedList.Add(new Person("Todd", 4));
+            unorderedList.Add(new Person("Rundgren", 14));
+            unorderedList.Add(new Person("Jack", 47));
+            unorderedList.Add(new Person("Kerouac", 47));
+            CustomList<string> namesList = new CustomList<string> { };
+            string expected = "ToddRundrenJackKerouac";
+            //act
+            unorderedList.Sort();
+            foreach (Person person in unorderedList)
+            {
+                namesList.Add(person.name);
+            }
+            string actual = namesList.ToString();
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+         //------------------------------------------------------------------------//
+        //--------------------------Enumerator Tests------------------------------//
 
         [TestMethod]
         public void Enumerator_Enumerate_PrintAllStringsContained()

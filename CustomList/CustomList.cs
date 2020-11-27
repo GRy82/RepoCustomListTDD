@@ -209,7 +209,7 @@ namespace CustomList
                     return true;
                 }
             }
-            else if (!(elementOne is string)){
+            else if (!(elementOne is string)){//if float, double or int.
                 if (Convert.ToDouble(elementOne) < Convert.ToDouble(elementTwo))
                 {
                     return true;
