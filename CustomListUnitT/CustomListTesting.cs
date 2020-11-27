@@ -630,39 +630,39 @@ namespace CustomListUnitT
             Assert.AreEqual(actualOrder, expectedOrder);
         }
 
-        //[TestMethod]
-        //public void Sort_CustomListSequence_AlphabetizedChars()
-        //{
-        //    //arrange
-        //    CustomList<char> unorderedList = new CustomList<char>();
-        //    unorderedList.Add('B');
-        //    unorderedList.Add('F');
-        //    unorderedList.Add('G');
-        //    unorderedList.Add('A');
-        //    string expectedOrder = "ABFG";
-        //    //act
-        //    unorderedList.Sort();
-        //    string actualOrder = unorderedList.ToString();
-        //    //assert
-        //    Assert.AreEqual(actualOrder, expectedOrder);
-        //}
+        [TestMethod]
+        public void Sort_CustomListSequence_AlphabetizedChars()
+        {
+            //arrange
+            CustomList<char> unorderedList = new CustomList<char>();
+            unorderedList.Add('B');
+            unorderedList.Add('F');
+            unorderedList.Add('G');
+            unorderedList.Add('A');
+            string expectedOrder = "ABFG";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
 
-        //[TestMethod]
-        //public void Sort_CustomListSequence_AlphabetizedStrings()
-        //{
-        //    //arrange
-        //    CustomList<string> unorderedList = new CustomList<string>();
-        //    unorderedList.Add("Puppy");
-        //    unorderedList.Add("Dog");
-        //    unorderedList.Add("Dorm");
-        //    unorderedList.Add("Poopy");
-        //    string expectedOrder = "DogDormPoopyPuppy";
-        //    //act
-        //    unorderedList.Sort();
-        //    string actualOrder = unorderedList.ToString();
-        //    //assert
-        //    Assert.AreEqual(actualOrder, expectedOrder);
-        //}
+        [TestMethod]
+        public void Sort_CustomListSequence_AlphabetizedStrings()
+        {
+            //arrange
+            CustomList<string> unorderedList = new CustomList<string>();
+            unorderedList.Add("Puppy");
+            unorderedList.Add("Dog");
+            unorderedList.Add("Dorm");
+            unorderedList.Add("Poopy");
+            string expectedOrder = "DogDormPoopyPuppy";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
 
         [TestMethod]
         public void Enumerator_Enumerate_PrintAllStringsContained()

@@ -12,8 +12,12 @@ namespace CustomList
     {
         static void Main(string[] args)
         {
-         
-
+            CustomList<string> customStrings = new CustomList<string> { };
+            customStrings.Add("ass");
+            customStrings.Add("butt");
+            customStrings.Add("cock");
+            Console.WriteLine(customStrings[0].ToString());
+            Console.ReadLine();
         }
     }
 }

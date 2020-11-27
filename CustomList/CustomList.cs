@@ -151,23 +151,29 @@ namespace CustomList
             }
         }
 
+
         public void Sort()
         {
-            int lastIndex = Count - 1;
-            int marker = 1;
-            while (marker <= lastIndex) {
-                //Element at index marker is out of order. Initiate shift.
-                if (Convert.ToInt32(_array[marker]) < Convert.ToInt32(_array[marker - 1])) {
-                    InsertAndShift(0, marker);
-                    marker++;
-                }
-                else{ //element at index marker is in order; move marker to right to check next index. 
-                    marker++;
-                }
+            bool isEligibleToSort = this._array is int[] || this._array is char[] ||
+                this._array is double[] || this._array is float[] || this._array is string[];
+            if (isEligibleToSort) {
+                IterateMarker(0, Count);
             }
+            return;
         }
 
         public void Sort(int startIndex, int Length)
+        {
+            bool isEligibleToSort = this._array is int[] || this._array is char[] ||
+                this._array is double[] || this._array is float[] || this._array is string[];
+            if (isEligibleToSort)
+            {
+                IterateMarker(startIndex, Length);
+            }
+            return;
+        }
+
+        void IterateMarker(int startIndex, int Length)
         {
             int lastIndex = startIndex + Length - 1;
             int marker = startIndex + 1;
@@ -175,21 +181,48 @@ namespace CustomList
             while (marker <= lastIndex)
             {
                 //Element at index marker is out of order. Initiate shift.
-                if (Convert.ToInt32(_array[marker]) < Convert.ToInt32(_array[marker - 1]))
+                if (MakeComparison(_array[marker], _array[marker-1]))
                 {
                     InsertAndShift(startIndex, marker);
                     marker++;
                 }
-                else //element at index marker is in order; move marker to right to check next index.
-                {
+                else
+                { //element at index marker is in order; move marker to right to check next index.
                     marker++;
                 }
             }
         }
 
+
+        bool MakeComparison(T elementOne, T elementTwo)
+        {
+            if (elementOne is char){
+                if (Convert.ToInt32(elementOne) < Convert.ToInt32(elementTwo)) {
+                    return true;
+                }
+            }
+            else if (!(elementOne is string)){
+                if (Convert.ToDouble(elementOne) < Convert.ToDouble(elementTwo))
+                {
+                    return true;
+                }
+            }
+            else if (elementOne is string)
+            {
+                string stringElementOne = elementOne.ToString();
+                string stringElementTwo = elementTwo.ToString();
+                if (stringElementOne.CompareTo(stringElementTwo) < 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         void InsertAndShift(int searchIndex, int marker)
         {
-            while (Convert.ToInt32(_array[searchIndex]) < Convert.ToInt32(_array[marker]) && searchIndex < marker)
+            while (MakeComparison(_array[searchIndex], _array[marker]) && searchIndex < marker)
             {
                 searchIndex++;
             }
