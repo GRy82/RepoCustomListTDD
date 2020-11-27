@@ -197,7 +197,15 @@ namespace CustomList
         bool MakeComparison(T elementOne, T elementTwo)
         {
             if (elementOne is char){
-                if (Convert.ToInt32(elementOne) < Convert.ToInt32(elementTwo)) {
+                int asciiElementOne = Convert.ToInt32(elementOne);
+                int asciiElementTwo = Convert.ToInt32(elementTwo);
+                if (asciiElementOne <= 90) {
+                    asciiElementOne += 32;
+                }
+                if (asciiElementTwo <= 90) {
+                    asciiElementTwo += 32;
+                }
+                if (asciiElementOne < asciiElementTwo) {
                     return true;
                 }
             }

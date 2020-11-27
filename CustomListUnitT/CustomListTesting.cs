@@ -648,6 +648,23 @@ namespace CustomListUnitT
         }
 
         [TestMethod]
+        public void Sort_CustomListChars_IgnoreCase()
+        {
+            //arrange
+            CustomList<char> unorderedList = new CustomList<char>();
+            unorderedList.Add('B');
+            unorderedList.Add('f');
+            unorderedList.Add('g');
+            unorderedList.Add('A');
+            string expectedOrder = "ABfg";
+            //act
+            unorderedList.Sort();
+            string actualOrder = unorderedList.ToString();
+            //assert
+            Assert.AreEqual(actualOrder, expectedOrder);
+        }
+
+        [TestMethod]
         public void Sort_CustomListSequence_AlphabetizedStrings()
         {
             //arrange
