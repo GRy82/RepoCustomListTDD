@@ -518,6 +518,29 @@ namespace CustomListUnitT
             Assert.IsTrue(isEmpty);
         }
 
+        [TestMethod]
+        public void SubtractionOperatorOverload_ContentsOfList_UnaffectedByUnsharedElements()
+        {
+            //arrange
+            CustomList<int> numsList1 = new CustomList<int> { };
+            CustomList<int> numsList2 = new CustomList<int> { };
+            for (int i = 0; i < 5; i++)
+            {
+                numsList1.Add(i);
+            }
+            for (int i = 4; i < 8; i++)
+            {
+                numsList2.Add(i);
+            }
+
+            //act
+            numsList1 = numsList1 - numsList2;
+            string expected = "0123";
+            string actual = numsList1.ToString();
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
         //------------------------------------------------------------------------------------
         //------------------------------- Zipper TESTS----------------------------------------
         [TestMethod]
