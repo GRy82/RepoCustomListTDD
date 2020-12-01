@@ -1,0 +1,62 @@
+CustomList<T> (-) Operator Overload
+
+Removes or ‘subtracts’ the elements contained within the CustomList<T> object on the right side of the operator, from the collection of elements contained within the CustomList<T> object left of the operator.
+
+Syntax:
+
+       public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)    
+
+Parameters:
+
+CustomList<T> listOne
+
+The collection that will be subjected to a loss of element(s), should it share particular elements of equal value—or hold the same object—as the other collection.
+
+CustomList<T> listTwo
+
+Serves as the collection of values or objects that will be removed from the first parameter, if those values or objects are contained within it.
+
+Return Type:
+
+CustomList<T> 
+
+The result is a collection of those elements contained within the first parameter, which were not present in the second parameter.
+
+Example:
+
+The following example demonstrates how to use the (-) operator to remove items from a CustomList<T>.
+
+public class ManageRoster{
+
+      public void CutPlayers(CustomList<Player> qbRoster, CustomList<Player> cutPlayers){
+
+            foreach(Player player in qbRoster){
+                  Console.WriteLine(player.name);
+            }
+	
+	Console.WriteLine();
+
+	foreach(Player player in cutPlayers){
+                  Console.WriteLine(player.name);
+            }
+
+	//Output:	
+            //Nathan Peterman
+	//Tyrod Taylor
+	//Josh Allen
+	//
+	//Nathan Peterman
+	//Tyrod Taylor
+
+            qbRoster = qbRoster - cutPlayers;
+	
+	foreach(Player player in qbRoster){
+                  Console.WriteLine(player.name);
+            }
+
+	//Output:
+	//Josh Allen
+      }
+}
+
+
